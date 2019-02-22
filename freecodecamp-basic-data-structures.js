@@ -1,3 +1,4 @@
+//splice() changes the original array whereas slice() doesn't.
 //Access an Array's Contents Using Bracket Notation
 let ourArray = ["a", "b", "c"];
 let ourVariable = ourArray[0]; // ourVariable equals "a"

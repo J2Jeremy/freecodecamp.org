@@ -1,3 +1,4 @@
+//methods used slice, splice, reduce, map, filter, reverse, substr, charAt, join, split, bind, replace, repeat, replace
 //Reverse a String - my solution, didnt need array, stringArr could just be a string
 function reverseString(str) { 
   let stringArr  =[];
@@ -32,7 +33,7 @@ function reverseString(str) {
 
 //Factorialize a Number - my solution
 function factorialize(num) {
-  return num ==0 ? 1 : num == 1 ? num : factorialize(num-1) * num;
+  return num == 0 ? 1 : num == 1 ? num : factorialize(num-1) * num;
 }
 console.log(factorialize(0)); 
 
@@ -89,7 +90,7 @@ function largestOfFour(arr) {
 }
 largestOfFour([[17, 23, 25, 12], [25, 7, 34, 48], [4, -10, 18, 21], [-72, -3, -17, -10]]);
 
-
+//return largest numbers in arrays - intermmediate solution
 function largestOfFour(arr) {
   return arr.map(function(group){ //creates a new array with the results of calling a function for every array element. //does not mutate original array
     return group.reduce(function(prev, current) {
@@ -99,8 +100,9 @@ function largestOfFour(arr) {
 }
 
 //Return Largest Numbers in Arrays - advanced solution
+//more details: https://guide.freecodecamp.org/certifications/javascript-algorithms-and-data-structures/basic-algorithm-scripting/return-largest-numbers-in-arrays/
 function largestOfFour(arr) {
-  return arr.map(Function.apply.bind(Math.max, null));
+  return arr.map(Function.apply.bind(Math.max, null));//While the syntax of this function is almost identical to that of call(), the fundamental difference is that call() accepts an argument list, while apply() accepts a single array of arguments.
 }
 
 //Confirm the Ending - my solution
@@ -204,7 +206,6 @@ function titleCase(str) {
 
 //Slice and Splice
 function frankenSplice(arr1, arr2, n) {
-  // It's alive. It's alive!
   let localArray = arr2.slice();
   for (let i = 0; i < arr1.length; i++) {
     localArray.splice(n, 0, arr1[i]);
@@ -212,3 +213,56 @@ function frankenSplice(arr1, arr2, n) {
   }
   return localArray;
 }
+
+//falsy bouncer
+function bouncer(arr) {
+  return arr.filter(Boolean);
+}
+
+//find lowest index to insert number in sorted array - my solution
+function getIndexToIns(arr, num) {
+  let sortedArr = arr.sort(function(a, b){
+    return a-b;
+  });
+  
+  if(sortedArr.length == 0){
+    return 0;
+  }
+
+  for(let i=0; i < sortedArr.length; i++){
+    if(sortedArr[i] >= num){
+      return i;
+    }
+  }
+  return sortedArr.length;
+}
+
+let text = getIndexToIns([10, 20, 30, 40, 50], 35);
+console.log(text); 
+//find lowest index to insert number in sorted array - alternate
+function getIndexToIns(arr, num) { 
+  arr.sort(function(a, b) {
+  return a - b;
+  });
+
+  var i = 0;
+  while (num > arr[i]) {
+  i++;
+  }
+
+  return i;
+}
+
+getIndexToIns([40, 60], 50);
+//find lowest index to insert number in sorted array - intermediate
+function getIndexToIns(arr, num) {
+  arr.push(num);
+  arr.sort(function(a, b){return a-b});
+  return arr.indexOf(num);
+}
+//find lowest index to insert number in sorted array - advanced
+function getIndexToIns(arr, num) {
+return arr.concat(num).sort((a,b) => a-b).indexOf(num);
+}
+
+getIndexToIns([1,3,4],2);
