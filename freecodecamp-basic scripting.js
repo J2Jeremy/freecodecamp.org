@@ -1,4 +1,24 @@
-//methods used slice, splice, reduce, map, filter, reverse, substr, charAt, join, split, bind, replace, repeat, replace
+/*
+methods used:
+substr    : (str) returns sub string based on starting/ending index
+repeat    : (str) returns a new string with a specified number of copies of the string it was called on.
+replace   : (str) searches a string for a specified value, and returns a new string where the specified values are replaced.
+charAt    : (str) returns the character at the specified index in a string
+split     : (str) turns string into array
+indexOf   : (str) returns the position of the first occurrence of a specified value in a string, -1 if not found, case sensitive
+
+slice     : (arr) returns new array, doesn't mutate original
+splice    : (arr) returns original array, mutates original
+join      : (arr) concats array into string
+reverse   : (arr) returns original array, reverses the order of the elements in an array
+concat    : (arr) returns new array, join two or more arrays
+sort      : (arr) sorts an array alphabetically, use .sort(function(a, b){return a - b}); to compare numbers
+reduce    : (arr) reduce the array to one single value
+filter    : (arr) returns original, altered array Filter let you provide a callback for every element
+map       : (arr) returns new array based on your existing array
+forEach   : (arr) works as a traditional for loop looping over the array and providing you array elements to do operations on them.
+every     : (arr) runs test on each element in array, returns false if test is failed, otherwise true, doesn't change array
+*/
 //Reverse a String - my solution, didnt need array, stringArr could just be a string
 function reverseString(str) { 
   let stringArr  =[];
@@ -266,3 +286,75 @@ return arr.concat(num).sort((a,b) => a-b).indexOf(num);
 }
 
 getIndexToIns([1,3,4],2);
+
+//mutations - my solution, procedural
+function mutation(arr) {
+
+	let firstStr = arr[0].toLowerCase();
+	let secondStr = arr[1].toLowerCase();
+
+	for(let i = 0; i<secondStr.length; i++){
+	  if (firstStr.indexOf(secondStr[i]) < 0){
+	    return false;
+	  };
+	}
+return true;
+}
+
+//mutations - alt solution, declarative
+function mutation(arr) {
+  return arr[1].toLowerCase()
+    .split('')
+    .every(function(letter) {
+      return arr[0].toLowerCase()
+        .indexOf(letter) != -1;
+    });
+}
+
+//chunky munky - my solution
+function chunkArrayInGroups(arr, size) {
+  let newArr = [];
+  for(let i = 0; i<arr.length; i+=size){//console.log (`i = ${i} ` + `i+size = ${i+size}`);
+    newArr.push(arr.slice(i, i+size));
+  }
+  return newArr;
+}
+chunkArrayInGroups(["a", "b", "c", "d"], 2);  
+
+//chunky munky - alt basic solutin
+    function chunkArrayInGroups(arr, size) {
+      var temp = [];
+      var result = [];
+      for (var a = 0; a < arr.length; a++) { //0  1 0  1
+        if (a % size !== size - 1) //size - 1 = 1
+          temp.push(arr[a]);
+        else {
+          temp.push(arr[a]);
+          result.push(temp);
+          temp = [];
+        }
+      }
+      if (temp.length !== 0)
+        result.push(temp);
+      return result;
+    }
+
+//chunky munky advanced solution 1
+function chunkArrayInGroups(arr, size) {
+  var newArr = [];
+  var i = 0;
+  while (i < arr.length) {
+    newArr.push(arr.slice(i, i+size));
+    i += size;
+  }
+  return newArr;
+}
+chunkArrayInGroups(["a", "b", "c", "d"], 2);
+//chunky munky advanced solution 2
+function chunkArrayInGroups(arr, size) {
+  var newArr = [];
+  while (arr.length) {
+    newArr.push(arr.splice(0,size));
+  }
+  return newArr;
+}
