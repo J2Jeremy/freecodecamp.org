@@ -60,9 +60,97 @@ var new_s = s.myMap(function(item){
   return item * 2;
 });
 console.log(new_s);
+
 //Use the filter Method to Extract Data from an Array
 var filteredList = watchList.map(function(e){
   return {title:e["Title"], rating:e["imdbRating"]}
 }).filter((e) => e.rating >= 8);
 
 console.log(filteredList);  
+
+//Implement the filter Method on a Prototype - my solution
+var s = [23, 65, 98, 5];
+
+Array.prototype.myFilter = function(callback){
+  let arr = [];
+  this.forEach(function(e){
+    if (callback(e)){
+      arr.push(e);
+    }
+  })
+  return arr;
+};
+
+var new_s = s.myFilter(function(item){
+  return item % 2 === 1;
+});
+
+//Return Part of an Array Using the slice Method
+function nonMutatingSplice(cities) {
+ return cities.slice(0, 3);
+}
+var inputCities = ["Chicago", "Delhi", "Islamabad", "London", "Berlin"];
+
+//Use the reduce Method to Analyze Data - my solution
+let length = 0;
+let averageRating = watchList.filter(function(e){
+  if (e["Director"] == "Christopher Nolan"){
+    length++;
+    return e["imdbRating"];
+  }
+}).reduce(function(total, i){
+  return total + parseFloat(i.imdbRating);
+  
+}, 0) / length;
+
+//Use the reduce Method to Analyze Data - alt solution 
+var averageRating = watchList.filter(x => x.Director === "Christopher Nolan").map(x => Number(x.imdbRating)).reduce((x1, x2) => x1 + x2) / watchList.filter(x => x.Director === "Christopher Nolan").length;
+
+//Return a Sorted Array Without Changing the Original Array - my solution
+var globalArray = [5, 6, 3, 2, 9];
+function nonMutatingSort(arr) {
+ return [...globalArray].sort(function(a, b){
+   return a-b;
+ })
+}
+//Return a Sorted Array Without Changing the Original Array -alt
+var globalArray = [5, 6, 3, 2, 9];
+function nonMutatingSort(arr) {
+  let newArr = [].concat(globalArray);
+ return newArr.sort( (a,b) => {return a-b});
+}
+
+//Split a String into an Array Using the split Method - my solution
+function splitify(str) {
+ return str.split(/\W/) 
+}
+
+//Convert Strings to URL Slugs -my solution
+function urlSlug(title) {
+ return title.split(/\W/).filter( (e) => e != '').join('-').toLowerCase(); 
+}
+//convert strings to URL slug -alt
+function urlSlug(title) {
+  return title.toLowerCase().trim().split(/\s+/).join('-');
+}
+
+//every
+function checkPositive(arr) {
+  return arr.every( (e) => e > 0);
+}
+
+//some Method to Check that Any Elements in an Array Meet a Criteria
+function checkPositive(arr) {
+  return arr.some( (e) => e > 0 );
+}
+//Introduction to Currying and Partial Application
+function add(x) {
+return function(y){
+  return function(z){
+    return x+y+z
+  }
+}
+
+}
+let test = add(10)(20)(30);
+console.log(test);
