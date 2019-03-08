@@ -5,8 +5,10 @@ repeat    : (str) returns a new string with a specified number of copies of the 
 replace   : (str) searches a string for a specified value, and returns a new string where the specified values are replaced.
 charAt    : (str) returns the character at the specified index in a string
 split     : (str) turns string into array
-indexOf   : (str) returns the position of the first occurrence of a specified value in a string, -1 if not found, case sensitive
+indexOf   : (str / arr) returns the position of the first occurrence of a specified value in a string, -1 if not found, case sensitive
 
+findIndex : returns the index of the first element in the array that satisfies the provided testing function. Otherwise, it returns -1, 
+			indicating no element passed the test.
 slice     : (arr) returns new array, doesn't mutate original
 splice    : (arr) returns original array, mutates original
 join      : (arr) concats array into string
@@ -17,7 +19,8 @@ reduce    : (arr) reduce the array to one single value
 filter    : (arr) returns original, altered array Filter let you provide a callback for every element
 map       : (arr) returns new array based on your existing array
 forEach   : (arr) works as a traditional for loop looping over the array and providing you array elements to do operations on them.
-every     : (arr) runs test on each element in array, returns false if test is failed, otherwise true, doesn't change array
+every     : (arr) returns true if EVERY element passes test, false otherwise
+some      : (arr) returns true if ANY element passes a test, fase otherwise
 */
 //Reverse a String - my solution, didnt need array, stringArr could just be a string
 function reverseString(str) { 

@@ -405,3 +405,376 @@ function fearNotLetter(str) {
 
 // test here
 fearNotLetter("abce");
+
+//Sorted Union. Write a function that takes two or more arrays and returns a new array of unique values in the order of the original provided arrays.
+//my solution 
+function uniteUnique(arr) {
+	var args = [...arguments];
+	let newArr =[];
+
+	for(let index in args){
+	  let currArr = args[index];
+	  currArr.filter( item =>{
+	    if (newArr.indexOf(item)==-1){
+	      newArr.push(item);
+	    }
+	  });
+	}
+
+	return newArr;
+}
+
+//sorted union alt
+function uniteUnique(arr1, arr2, arr3) {
+  // Creates an empty array to store our final result.
+  var finalArray = [];
+  for (var i = 0; i < arguments.length; i++) {
+    var arrayArguments = arguments[i];
+
+    for (var j = 0; j < arrayArguments.length; j++) {
+      var indexValue = arrayArguments[j];
+
+      if (finalArray.indexOf(indexValue) < 0) {
+        finalArray.push(indexValue);
+      }
+    }
+  }
+
+  return finalArray;
+}
+
+// test here
+uniteUnique([1, 3, 2], [5, 2, 1, 4], [2, 1]);
+
+//sorted union alt 2
+function uniteUnique(arr) {
+  var args = [...arguments];
+  var result = [];
+  for(var i = 0; i < args.length; i++) {
+    for(var j = 0; j < args[i].length; j++) {
+       if(!result.includes(args[i][j])) {
+        result.push(args[i][j]);
+      }
+    }
+  }
+  return result;
+}
+
+//sorted union intermediate
+function uniteUnique(arr1, arr2, arr3) {
+ var newArr;
+ //Convert the arguments object into an array
+  var args = Array.prototype.slice.call(arguments);
+  //Use reduce function to flatten the array
+  newArr = args.reduce(function(arrA,arrB){
+  //Apply filter to remove the duplicate elements in the array
+    return arrA.concat(arrB.filter(function(i){
+      return arrA.indexOf(i) === -1;
+    }));
+  });
+
+   return newArr;                    
+}
+
+//sorted union advanced 
+function uniteUnique() {
+  var concatArr = [];
+  var i = 0;
+  while (arguments[i]){
+    concatArr = concatArr.concat(arguments[i]); i++;
+  }
+  uniqueArray = concatArr.filter(function(item, pos) {
+    return concatArr.indexOf(item) == pos;
+  });
+  return uniqueArray;
+}
+
+//Convert HTML Entities. Convert the characters &, <, >, " (double quote), and ' (apostrophe), in a string to their corresponding HTML entities.
+// my solution
+
+function convertHTML(str) {
+
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+}
+
+let test = convertHTML("Dolce & Gabbana");
+console.log(test);
+
+// conver HTML entities alt
+function convertHTML(str) {
+// Split by character to avoid problems.
+var temp = str.split('');
+// Since we are only checking for a few HTML elements I used a switch
+
+for (var i = 0; i < temp.length; i++) {
+switch (temp[i]) {
+  case '<':
+    temp[i] = '&lt;';
+    break;
+  case '&':
+    temp[i] = '&amp;';
+    break;
+  case '>':
+    temp[i] = '&gt;';
+    break;
+  case '"':
+    temp[i] = '&quot;';
+    break;
+  case "'":
+    temp[i] = "&apos;";
+    break;
+}
+}
+
+temp = temp.join('');
+return temp;
+}
+//html entities intermediate
+function convertHTML(str) {
+//Chaining of replace method with different arguments
+  str = str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,"&apos;");
+return str;
+}
+
+//html entities advanced
+function convertHTML(str) {
+  // Use Object Lookup to declare as many HTML entities as needed.
+  htmlEntities={
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    '\'':"&apos;"
+  };
+  //Use map function to return a filtered str with all entities changed automatically.
+  return str.split('').map(entity => htmlEntities[entity] || entity).join('');
+}
+
+//Sum All Odd Fibonacci Numbers. 
+//Given a positive integer num, return the sum of all odd Fibonacci numbers that are less than or equal to num
+//my solution -ugly
+function sumFibs(num) {
+  let ogNum = num;
+  let oddArr=[];
+  let a=1, b=0, temp;
+
+  while(num >= 1){
+    temp = a;
+    a = a+b;
+    b = temp;
+    num--;
+    if(b%2 !== 0){
+      oddArr.push(b);
+    }
+    
+  }
+ 
+  return oddArr.filter(i => {
+    return i <= ogNum;
+  }).reduce( (a,b) => {
+    return a+b
+  });
+
+}
+
+// sum all odd fibonacci numbers -alt 
+function sumFibs(num) {
+    var prevNumber = 0;
+    var currNumber = 1;
+    var result = 0;
+    while (currNumber <= num) {
+        if (currNumber % 2 !== 0) {
+            result += currNumber;
+        }
+
+        currNumber += prevNumber;
+        prevNumber = currNumber - prevNumber;
+    }
+
+    return result;
+}
+// sum all odd fibonacci numbers -intermediate
+function sumFibs(num) {
+    // Perform checks for the validity of the input
+    if (num < 0) return -1;
+    if (num === 0 || num === 1) return 1;
+
+    // Create an array of fib numbers till num
+    const arrFib = [1, 1];
+    let nextFib = 0;
+    
+    // We put the new Fibonacci numbers to the front so we
+    // don't need to calculate the length of the array on each
+    // iteration
+    while((nextFib = arrFib[0] + arrFib[1]) <= num) {
+        arrFib.unshift(nextFib);
+    }
+
+    // Sum only the odd numbers and return the value
+    return arrFib.reduce((acc, curr) => {
+        return acc + curr * (curr % 2);
+    });
+}
+
+//sum all prime numbers inclusive of num
+//my solution
+function sumPrimes(num) {
+  let total=0;
+
+  function isPrime(aNum){
+    for(let i = 2; i<aNum; i++){
+      if(aNum % i == 0){
+        return false      
+      }
+    }
+    return true
+  }
+  for(let i = 2; i<=num; i++){
+    if(isPrime(i)){
+      console.log(i);
+      total+=i;
+    }
+  }
+  return total;
+}
+//Smallest Common Multiple
+//Find the smallest common multiple of the provided parameters that can be evenly divided by both, as well as by all sequential numbers in the range between these parameters. 
+//my solution
+function smallestCommons(arr) {
+  // Sort array from greater to lowest
+  // This line of code was from Adam Doyle (http://github.com/Adoyle2014)
+  arr.sort(function(a, b) {
+    return b - a;
+  });
+
+  // Create new array and add all values from greater to smaller from the
+  // original array.
+  var newArr = [];
+  for (var i = arr[0]; i >= arr[1]; i--) {
+    newArr.push(i);
+  }
+
+  // Variables needed declared outside the loops.
+  var quot = 0;
+  var loop = 1;
+  var n;
+
+  // Run code while n is not the same as the array length.
+  do {
+    quot = newArr[0] * loop * newArr[1];
+    for (n = 2; n < newArr.length; n++) {
+      if (quot % newArr[n] !== 0) {
+        break;
+      }
+    }
+
+    loop++;
+  } while (n !== newArr.length);
+
+  return quot;
+}
+
+// test here
+smallestCommons([1,5]);
+
+
+
+//Drop it
+//Given the array arr, iterate through and remove each element starting from the first element (the 0 index) until the function func returns true when the iterated element is passed through it. Then return the rest of the array once the condition is satisfied, otherwise, arr should be returned as an empty array.
+//my solution
+function dropElements(arr, func) {
+
+  let firstIndex = [];
+  arr.forEach( e=> {
+    return func(e) ? firstIndex.push(arr.indexOf(e)) : false;
+  });
+
+  return firstIndex.length > 0 ? arr.slice(firstIndex[0]) : [];
+}
+ 
+let test = dropElements([0, 1, 0, 1], function(n) {return n === 1;});
+console.log(test);
+
+//Drop it alt
+function dropElements(arr, func) {
+  var times = arr.length;
+  for (var i = 0; i < times; i++) {
+    if (func(arr[0])) {
+      break;
+    } else {
+      arr.shift();
+    }
+  }
+  return arr;
+}
+//Drop it intermediate
+function dropElements(arr, func) {
+  return arr.slice(arr.findIndex(func) >= 0 ? arr.findIndex(func): arr.length, arr.length);
+}
+//Drop it advanced
+function dropElements(arr, func) {
+  while(arr.length > 0 && !func(arr[0])) {
+    arr.shift();
+  }
+  return arr;
+}
+
+//Steamroller
+//Flatten a nested array. You must account for varying levels of nesting. Remember to use Read-Search-Ask if you get stuck. Try to pair program. Write your own code.
+function steamrollArray(arr) {
+  let newArr = [];
+
+  let flatty = function(arg){
+
+    if(!Array.isArray(arg)){
+      newArr.push(arg);
+    } else {
+      for(let a in arg){
+        flatty(arg[a]);
+      }
+    }
+  };
+  arr.forEach(flatty);
+  console.log('newArr= '+newArr);
+  return newArr;
+}
+ 
+let test = steamrollArray([1, [2], [3, [[4]]]]);
+console.log(test);
+
+//Steamroller -intermediate
+function steamrollArray(arr) {
+  let flat = [].concat(...arr);
+  return flat.some(Array.isArray) ? steamrollArray(flat) : flat;
+}
+//Steamroller - advanced
+function steamrollArray(arr) {
+  return arr.toString()
+    .replace(',,', ',')       // "1,2,,3" => "1,2,3"
+    .split(',')               // ['1','2','3']
+    .map(function(v) {
+      if (v == '[object Object]') { // bring back empty objects
+        return {};
+      } else if (isNaN(v)) {        // if not a number (string)
+        return v;
+      } else {
+        return parseInt(v);         // if a number in a string, convert it
+      }
+    });
+}
+//binary agents
+//Return an English translated sentence of the passed binary string.
+//my solution
+function binaryAgent(str) {
+let arr = str.split(' ').map( i=> parseInt(i,2));
+return arr.map( e=> String.fromCharCode(e)).join('');
+
+}
+let test = binaryAgent("01000001 01110010 01100101 01101110 00100111 01110100 00100000 01100010 01101111 01101110 01100110 01101001 01110010 01100101 01110011 00100000 01100110 01110101 01101110 00100001 00111111");
+console.log(test);
+
+//binary agents -advanced
+// fromCharCode() expects a series of numbers rather than an Array! We can use ES6 Spread Operator to pass in an Array of numbers as individual numbers.
+    function binaryAgent(str) {
+      return String.fromCharCode(...str.split(" ").map(function(char){ return parseInt(char, 2); }));
+    }
