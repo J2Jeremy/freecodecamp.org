@@ -411,7 +411,6 @@ fearNotLetter("abce");
 function uniteUnique(arr) {
 	var args = [...arguments];
 	let newArr =[];
-
 	for(let index in args){
 	  let currArr = args[index];
 	  currArr.filter( item =>{
@@ -420,32 +419,22 @@ function uniteUnique(arr) {
 	    }
 	  });
 	}
-
 	return newArr;
 }
-
 //sorted union alt
 function uniteUnique(arr1, arr2, arr3) {
-  // Creates an empty array to store our final result.
   var finalArray = [];
   for (var i = 0; i < arguments.length; i++) {
     var arrayArguments = arguments[i];
-
     for (var j = 0; j < arrayArguments.length; j++) {
       var indexValue = arrayArguments[j];
-
       if (finalArray.indexOf(indexValue) < 0) {
         finalArray.push(indexValue);
       }
     }
   }
-
   return finalArray;
 }
-
-// test here
-uniteUnique([1, 3, 2], [5, 2, 1, 4], [2, 1]);
-
 //sorted union alt 2
 function uniteUnique(arr) {
   var args = [...arguments];
@@ -488,7 +477,19 @@ function uniteUnique() {
   });
   return uniqueArray;
 }
-
+/* this helps me understand
+[ 1, 3, 2, 5, 2, 1, 4, 2, 1 ]
+indexOf(item) = 0 item= 1 pos= 0
+indexOf(item) = 1 item= 3 pos= 1
+indexOf(item) = 2 item= 2 pos= 2
+indexOf(item) = 3 item= 5 pos= 3
+indexOf(item) = 2 item= 2 pos= 4
+indexOf(item) = 0 item= 1 pos= 5
+indexOf(item) = 6 item= 4 pos= 6
+indexOf(item) = 2 item= 2 pos= 7
+indexOf(item) = 0 item= 1 pos= 8
+*/
+uniteUnique([1, 3, 2], [5, 2, 1, 4], [2, 1]);
 //Convert HTML Entities. Convert the characters &, <, >, " (double quote), and ' (apostrophe), in a string to their corresponding HTML entities.
 // my solution
 
@@ -778,3 +779,98 @@ console.log(test);
     function binaryAgent(str) {
       return String.fromCharCode(...str.split(" ").map(function(char){ return parseInt(char, 2); }));
     }
+
+//Everything Be True
+//Check if the predicate (second argument) is truthy on all elements of a collection (first argument).
+//my solution
+function truthCheck(collection, pre) {
+  return collection.every( e => e[pre])
+}
+let test = truthCheck([{"user": "Tinky-Winky", "sex": "male"}, {"user": "Dipsy", "sex": "male"}, {"user": "Laa-Laa", "sex": "female"}, {"user": "Po", "sex": "female"}], "sex");
+console.log(test);
+
+//everything be true - alt
+function truthCheck(collection, pre) {
+  // Create a counter to check how many are true.
+  var counter = 0;
+  // Check for each object
+  for (var c in collection) {
+    // If it is has property and value is truthy
+    if (collection[c].hasOwnProperty(pre) && Boolean(collection[c][pre])) {
+      counter++;
+    }
+  }
+  // Outside the loop, check to see if we got true for all of them and return true or false
+  return counter == collection.length;
+}
+
+//Arguments Optional
+//Create a function that sums two arguments together. If only one argument is provided, then return a function that expects one argument and returns the sum. For example, addTogether(2, 3) should return 5, and addTogether(2) should return a function.
+//my solution
+function addTogether() {
+  let arr = [...arguments];
+  if(arr.every(e => {return typeof e == "number"})){
+    return arr.length > 1 ? arr[0]+arr[1] : function(arg2){ 
+      return typeof arg2 == "number" ? arg2+arr[0] : undefined;
+    };
+  }
+  return undefined;
+}
+// arguments optional - advanced
+function addTogether() {
+  var args = Array.from(arguments);
+  return args.some(n => typeof n !== 'number') ? undefined : args.length > 1 ?
+      args.reduce((acc, n) => acc += n, 0) :
+      (n) => typeof n === "number" ? n + args[0]:undefined;
+}
+
+//Make a Person - my solution
+var Person = function(firstAndLast) {
+
+  this.getFirstName = () =>{
+    return firstAndLast.split(' ')[0];
+  };
+
+  this.getLastName = () => {
+    return firstAndLast.split(' ')[1];
+  };
+
+  this.getFullName = () => {
+    return firstAndLast;
+  };
+
+  this.setFirstName = (first) => {
+    firstAndLast = first + " " + firstAndLast.split(' ')[1];
+  }; 
+
+  this.setLastName = (last) => {
+    firstAndLast = firstAndLast.split(' ')[0] + " " + last;
+  };
+
+  this.setFullName = (str) => {
+    firstAndLast = str;
+  }; 
+};  
+
+var bob = new Person('Bob Ross');
+
+//Map the Debris
+//Return a new array that transforms the elements' average altitude into their orbital periods (in seconds). The array will contain objects in the format {name: 'name', avgAlt: avgAlt}
+//my solution
+function orbitalPeriod(arr) {
+  var GM = 398600.4418;
+  var earthRadius = 6367.4447;
+
+  let newArr = [];
+  for(let i in arr){
+      let aCubed = Math.pow((earthRadius + arr[i].avgAlt), 3);
+      let getSQRT = Math.sqrt(aCubed / GM);
+      let getOribtal = Math.round((2 * 3.1415926535) * getSQRT);
+      newArr.push({'name':arr[i].name, 'orbitalPeriod': getOribtal});
+  }
+
+  return newArr;
+}
+
+let test = orbitalPeriod([{name : "sputnik", avgAlt : 35873.5553}]);
+console.log(test);

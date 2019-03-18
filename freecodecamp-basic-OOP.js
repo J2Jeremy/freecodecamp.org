@@ -1,10 +1,16 @@
 /* useful things
 instanceof        : The instanceof operator tests the presence of constructor.prototype in object's prototype chain
-hasOwnProperty    : returns a boolean indicating whether the object has the specified property as its own property (as opposed to inheriting it).
-constructor       : advantage of the constructor property is that it's possible to check for this property to find out what kind of object it is. 					: Since the constructor property can be overwritten (which will be covered in the next two challenges) it’s generally better to 				  : use the instanceof method to check the type of an object.
+hasOwnProperty    : returns a boolean indicating whether the object has the specified property as its own property (as opposed to 
+                    inheriting it).
+constructor       : advantage of the constructor property is that it's possible to check for this property to find out what kind 
+                    of object it is. 					
+                  : Since the constructor property can be overwritten (which will be covered in the next two challenges) it’s 
+                    generally better to 				  : use the instanceof method to check the type of an object.
 isPrototypeOf     : shows prototype relationship, obj.prototype.isPrototypeOf(obj2)
-prototype         : All objects in JavaScript (with a few exceptions) have a prototype. Also, an object’s prototype itself is an object.
-                  : Because a prototype is an object, a prototype can have its own prototype! In this case, the prototype of Bird.prototype is
+prototype         : All objects in JavaScript (with a few exceptions) have a prototype. Also, an object’s prototype itself is an 
+                    object.
+                  : Because a prototype is an object, a prototype can have its own prototype! In this case, the prototype of 
+                    Bird.prototype is
                   : Object.prototype. 
 Object.create     : Object.create(obj) creates a new object, and sets obj as the new object's prototype
 
